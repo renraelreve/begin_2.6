@@ -1,5 +1,6 @@
-import { useState, useReducer } from "react";
-import { productReducer, defaultProduct } from "../reducers/ProductReducer";
+import { useState, useContext } from "react";
+// import { productReducer, defaultProduct } from "../reducers/ProductReducer";
+import ProductContext from "../context/ProductContext";
 
 import styles from "./Product.module.css";
 import Card from "./Card";
@@ -9,32 +10,16 @@ function Product() {
   const [list, setList] = useState([]);
   const [sumTotal, setSumTotal] = useState(0);
 
-  const [state, dispatch] = useReducer(productReducer, defaultProduct);
-
-  const handlerPlus = () => {
-    dispatch({ type: "PLUS_COUNT" });
-  };
-
-  const handlerMinus = () => {
-    dispatch({ type: "MINUS_COUNT" });
-  };
-
-  const handlerChangeName = (value) => {
-    dispatch({ type: "SET_NAME", name: value });
-  };
-
-  const handlerChangePrice = (value) => {
-    dispatch({ type: "SET_PRICE", price: value });
-  };
+  const ctx = useContext(ProductContext);
 
   const handlerAddProduct = () => {
     // Create new list item
     const newItem = {
-      name: state.name,
-      quantity: state.count,
-      price: state.price,
-      discount: state.discount,
-      total: (state.count * state.price * (100 - state.discount)) / 100,
+      name: ctx.name,
+      quantity: ctx.count,
+      price: ctx.price,
+      discount: ctx.discount,
+      total: (ctx.count * ctx.price * (100 - ctx.discount)) / 100,
     };
 
     // Copy previous list and append new item to its end
@@ -51,14 +36,14 @@ function Product() {
   return (
     <div className={styles.container}>
       <Card
-        name={state.name}
-        count={state.count}
-        discount={state.discount}
-        price={state.price}
-        handlerMinus={handlerMinus}
-        handlerPlus={handlerPlus}
-        handlerChangeName={handlerChangeName}
-        handlerChangePrice={handlerChangePrice}
+        // name={ctx.name}
+        // count={ctx.count}
+        // discount={ctx.discount}
+        // price={ctx.price}
+        // handlerMinus={handlerMinus}
+        // handlerPlus={handlerPlus}
+        // handlerChangeName={handlerChangeName}
+        // handlerChangePrice={handlerChangePrice}
         handlerAddProduct={handlerAddProduct}
       />
       <ViewList list={list} sum={sumTotal} />

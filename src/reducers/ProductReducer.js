@@ -20,8 +20,8 @@ export function productReducer(state, action) {
     case "MINUS_COUNT": {
       let newState = { ...state }; // Copy the previous state
       newState.count = state.count - 1;
-      if (newState.count >= 5) {
-        newState.discount = 20;
+      if (newState.count < 5) {
+        newState.discount = 0;
       }
       if (newState.count < 0) newState.count = 0;
       return newState; // Return the new updated state
